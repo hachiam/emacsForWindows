@@ -3,6 +3,7 @@
 (setq make-backup-files nil)
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
+(scroll-bar-mode 0)
 (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 * unicode
@@ -43,6 +44,7 @@
 * editer
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :height 160)
+(setq ring-bell-function 'ignore)
 (electric-pair-mode 1)
 (electric-indent-mode t)
 (delete-selection-mode t)
@@ -177,6 +179,38 @@
   '(("\\.js\\'" . js2-mode))
   auto-mode-alist)))
 
+#+END_SRC
+** web-mode/emmet-mode
+#+BEGIN_SRC emacs-lisp
+(use-package web-mode
+:ensure t
+:config
+ (require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode)))
+
+(defun my-web-mode-hook()
+ "hooks for indention"
+(setq web-mode-markup-indent-offset 2)
+(setq web-mode-css-indent-offset 2)
+(setq web-mode-code-indent-offset 2))
+(add-hook 'web-mode-hook 'my-web-mode-hook)
+
+;;; emmet-mode
+(use-package emmet-mode
+:ensure t
+:config
+ (require 'emmet-mode)
+(add-hook 'sgml-mode-hook 'emmet-mode) 
+(add-hook 'html-mode-hook 'emmet-mode)
+(add-hook 'web-mode-hook 'emmet-mode)
+(add-hook 'css-mode-hook  'emmet-mode))
 #+END_SRC
 * keybindings
 #+BEGIN_SRC emacs-lisp
