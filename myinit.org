@@ -1,0 +1,189 @@
+* interface tweaks
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-files nil)
+(setq inhibit-startup-message t)
+(tool-bar-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+* unicode
+#+BEGIN_SRC emacs-lisp
+;;; default-setting
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+(set-buffer-file-coding-system 'utf-8-unix)
+(set-clipboard-coding-system 'utf-8-unix)
+(set-file-name-coding-system 'utf-8-unix)
+(set-keyboard-coding-system 'utf-8-unix)
+(set-next-selection-coding-system 'utf-8-unix)
+(set-selection-coding-system 'utf-8-unix)
+(set-terminal-coding-system 'utf-8-unix)
+(setq locale-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+;;;for MS-windows
+(set-clipboard-coding-system 'euc-cn)
+
+
+;; Setting Chinese Font
+(use-package cnfonts
+:ensure t
+:config
+(cnfonts-enable)
+(setq cnfonts-use-face-font-rescale t))
+
+#+END_SRC
+* theme
+#+BEGIN_SRC emacs-lisp
+(use-package moe-theme
+  :ensure t)
+(use-package monokai-theme
+  :ensure t)
+(load-theme 'monokai t)
+#+END_SRC
+* editer
+#+BEGIN_SRC emacs-lisp
+(set-face-attribute 'default nil :height 160)
+(electric-pair-mode 1)
+(electric-indent-mode t)
+(delete-selection-mode t)
+(global-linum-mode 1)
+#+END_SRC
+* Swiper/ivy/Counsel
+#+BEGIN_SRC emacs-lisp
+
+   (use-package counsel
+  :ensure t
+  :bind
+  (("M-y" . counsel-yank-pop)
+   :map ivy-minibuffer-map
+   ("M-y" . ivy-next-line)))
+
+
+  (use-package ivy
+  :ensure t
+  :diminish (ivy-mode)
+  :bind (("C-x b" . ivy-switch-buffer))
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  (setq ivy-count-format "%d/%d ")
+  (setq ivy-display-style 'fancy))
+
+
+  (use-package swiper
+  :ensure t
+  :bind (("C-s" . swiper-isearch)
+	 ("C-r" . swiper-isearch)
+	 ("C-c C-r" . ivy-resume)
+	 ("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file))
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy)
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+    ))
+#+END_SRC
+* company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+:ensure t
+:config
+(setq company-idle-delay 0.08)
+(setq company-minimum-prefix-length 3)
+
+(global-company-mode t)
+)
+
+#+END_SRC
+* Undo-Tree
+#+BEGIN_SRC emacs-lisp
+(use-package undo-tree
+  :ensure t
+  :init
+  (global-undo-tree-mode))
+
+#+END_SRC
+* highlight-parentheses-mode
+#+BEGIN_SRC emacs-lisp
+(use-package highlight-parentheses
+ :ensure t
+ :config
+(define-globalized-minor-mode global-highlight-parentheses-mode
+ highlight-parentheses-mode
+ (lambda ()
+  (highlight-parentheses-mode t)))
+(global-highlight-parentheses-mode t))
+
+(setq hl-paren-colors
+      '(;"#8f8f8f" ; this comes from Zenburn
+                   ; and I guess I'll try to make the far-outer parens look like this
+        "orange1" "yellow1" "greenyellow" "green1"
+        "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
+
+
+#+END_SRC
+* hungry-delete
+#+BEGIN_SRC emacs-lisp
+(use-package hungry-delete
+  :ensure t
+  :config
+  (global-hungry-delete-mode))
+#+END_SRC
+* evil
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+ :ensure t
+ :config
+ (evil-mode 1)
+)
+
+(defun xwl-jj-as-esc ()
+  (interactive)
+  (if (memq evil-state '(insert replace))
+      (let ((changed? (buffer-modified-p)))
+          (insert "j")
+          (let* ((tm (current-time))
+                 (ch (read-key)))
+            (if (and (eq ch ?j)
+                     (< (time-to-seconds (time-since tm)) 0.5))
+                (save-excursion
+                  (delete-char -1)
+                  (evil-force-normal-state)
+                  (set-buffer-modified-p changed?))
+              (insert ch))))
+    (call-interactively 'evil-next-line)))
+
+(define-key evil-insert-state-map  "j" 'xwl-jj-as-esc)
+(define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
+
+#+END_SRC
+
+* language
+** golang
+#+BEGIN_SRC emacs-lisp
+(use-package go-mode
+  :ensure t)
+
+#+END_SRC
+** javascript
+#+BEGIN_SRC emacs-lisp
+(use-package js2-mode
+:ensure t
+:config
+(setq auto-mode-alist
+  (append
+  '(("\\.js\\'" . js2-mode))
+  auto-mode-alist)))
+
+#+END_SRC
+* keybindings
+#+BEGIN_SRC emacs-lisp
+;;; open init-file
+(defun open-init-file()
+  (interactive)
+  (find-file "c:/Users/weichenxi/AppData/Roaming/.emacs.d/myinit.org"))
+(global-set-key (kbd "<f2>") 'open-init-file)
+
+#+END_SRC
