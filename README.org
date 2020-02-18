@@ -1,4 +1,4 @@
 * My emacs
-1. This init file most for c++ and c develeper
-2. Using really easy hacking just for fun.
+1. Using really easy hacking just for fun.
+2. This file is a .emacs for windows Users.
 
