@@ -23,7 +23,10 @@
 
 ;;;for MS-windows
 (set-clipboard-coding-system 'euc-cn)
-
+(set-default 'process-coding-system-alist
+      '(("[pP][lL][iI][nN][kK]" gbk-dos . gbk-dos)
+	("[cC][mM][dD][pP][rR][oO][xX][yY]" gbk-dos . gbk-dos)
+	("[gG][sS]" gbk-dos . gbk-dos)))
 
 ;; Setting Chinese Font
 (use-package cnfonts
