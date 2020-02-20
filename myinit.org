@@ -27,6 +27,7 @@
       '(("[pP][lL][iI][nN][kK]" gbk-dos . gbk-dos)
 	("[cC][mM][dD][pP][rR][oO][xX][yY]" gbk-dos . gbk-dos)
 	("[gG][sS]" gbk-dos . gbk-dos)))
+(setq file-name-coding-system 'gbk)
 
 ;; Setting Chinese Font
 (use-package cnfonts
@@ -223,4 +224,26 @@
   (find-file "c:/Users/weichenxi/AppData/Roaming/.emacs.d/myinit.org"))
 (global-set-key (kbd "<f2>") 'open-init-file)
 
+;;;compile for c++
+(defun your-g++-compile-and-run ()
+  (interactive)
+  (compile (format "g++ -pthread %s && .\\a.exe" (buffer-file-name))))
+;;;compile for c
+(defun your-gcc-compile-and-run ()
+  (interactive)
+  (compile (format "gcc %s && .\\a.exe" (buffer-file-name))))
+;;; run code for golang
+(defun go-run()
+  (interactive)
+  (compile (format "go run %s" (buffer-file-name))))
+
+;;;binding to kbd
+(eval-after-load "cc-mode"
+'(progn
+(define-key c++-mode-map (kbd "<f5>") #'your-g++-compile-and-run)
+(define-key c-mode-base-map (kbd "<f5>") #'your-gcc-compile-and-run)))
+
+(eval-after-load "go-mode"
+'(progn
+(define-key go-mode-map (kbd "<f5>") #'go-run)))
 #+END_SRC
