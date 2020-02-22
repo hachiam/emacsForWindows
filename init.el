@@ -47,7 +47,7 @@
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
    (quote
-    (tide lazycat-theme org-bullets color-theme-sanityinc-tomorrow emmet-mode node-js-repl js2-mode cnfonts go-mode highlight-parentheses emacs-helm-gtags company-c-headers company-clang evil hungry-delete undo-tree flycheck company counsel use-package)))
+    (nyan-mode yasnippet-snippets yasnippet tide lazycat-theme org-bullets color-theme-sanityinc-tomorrow emmet-mode node-js-repl js2-mode cnfonts go-mode highlight-parentheses emacs-helm-gtags company-c-headers company-clang evil hungry-delete undo-tree flycheck company counsel use-package)))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(vc-annotate-background nil)
