@@ -44,15 +44,15 @@
 (use-package nyan-mode
 :ensure t
 :config
-(case window-system
- ((x w32) (nyan-mode))))
+(nyan-mode 1))
 
 #+END_SRC
 * editer
 #+BEGIN_SRC emacs-lisp
 (set-face-attribute 'default nil :height 160)
 (setq ring-bell-function 'ignore)
-(setq scroll-margin 3)
+(setq scroll-margin 3
+      scroll-conservatively 10000)
 (setq default-major-mode 'text-mode)
 (mouse-avoidance-mode 'animate)
 (setq frame-title-format "emacs@%b")
@@ -212,10 +212,6 @@
 #+BEGIN_SRC emacs-lisp
 (use-package go-mode
   :ensure t)
-
-(defun go-run-buffer()
-  (interactive)
-  (shell-command (concat "go run " (buffer-name))))
 
 #+END_SRC
 ** javascript
