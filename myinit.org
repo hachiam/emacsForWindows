@@ -257,6 +257,38 @@
 (add-hook 'web-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook  'emmet-mode))
 #+END_SRC
+** Racket
+#+BEGIN_SRC emacs-lisp
+(use-package racket-mode
+:ensure
+:config
+(require 'racket-mode)
+(setq racket-racket-program "racket")
+(setq racket-raco-program "raco")
+(add-hook 'racket-mode-hook
+          (lambda ()
+            (define-key racket-mode-map (kbd "C-x C-j") 'racket-run)))
+(setq tab-always-indent 'complete))
+
+#+END_SRC
+** Haskell
+#+BEGIN_SRC emacs-lisp
+(use-package haskell-mode
+:ensure t)
+
+(defun c-haskell-load-module ()
+  (interactive)
+  (let ((module (buffer-name)))
+    (save-buffer)
+    (switch-to-haskell)
+    (insert (concat ":load " module))
+    (comint-send-input)))
+
+(eval-after-load "haskell-mode"
+  '(progn
+  (define-key haskell-mode-map (kbd "C-c C-c") #'c-haskell-load-module)))
+
+#+END_SRC
 * keybindings
 #+BEGIN_SRC emacs-lisp
 ;;; open init-file
