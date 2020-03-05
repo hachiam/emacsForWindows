@@ -128,6 +128,19 @@
 :ensure t)
 
 #+END_SRC
+* smartparens
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+:ensure t
+:config
+(smartparens-mode 1))
+
+(use-package evil-smartparens
+:ensure t
+:config
+(add-hook 'smartparens-enabled-hook #'evil-smartparens-mode))
+
+#+END_SRC
 * Undo-Tree
 #+BEGIN_SRC emacs-lisp
 (use-package undo-tree
@@ -292,6 +305,18 @@
 (eval-after-load "haskell-mode"
   '(progn
   (define-key haskell-mode-map (kbd "C-c C-c") #'c-haskell-load-module)))
+
+#+END_SRC
+** common-lisp
+#+BEGIN_SRC emacs-lisp
+(use-package slime
+:ensure t
+:config
+(setq inferior-lisp-program "c:/common-lisp/sbcl.exe")
+(require 'slime)
+(slime-setup)
+(require 'slime-autoloads)
+(slime-setup '(slime-fancy)))
 
 #+END_SRC
 * keybindings
