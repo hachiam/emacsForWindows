@@ -60,6 +60,7 @@
 (electric-indent-mode t)
 (delete-selection-mode t)
 (global-linum-mode 1)
+(show-paren-mode 1)
 #+END_SRC
 * Swiper/ivy/Counsel
 #+BEGIN_SRC emacs-lisp
@@ -147,25 +148,6 @@
   :ensure t
   :init
   (global-undo-tree-mode))
-
-#+END_SRC
-* highlight-parentheses-mode
-#+BEGIN_SRC emacs-lisp
-(use-package highlight-parentheses
- :ensure t
- :config
-(define-globalized-minor-mode global-highlight-parentheses-mode
- highlight-parentheses-mode
- (lambda ()
-  (highlight-parentheses-mode t)))
-(global-highlight-parentheses-mode t))
-
-(setq hl-paren-colors
-      '(;"#8f8f8f" ; this comes from Zenburn
-                   ; and I guess I'll try to make the far-outer parens look like this
-        "orange1" "yellow1" "greenyellow" "green1"
-        "springgreen1" "cyan1" "slateblue1" "magenta1" "purple"))
-
 
 #+END_SRC
 * hungry-delete
