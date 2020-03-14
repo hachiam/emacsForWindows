@@ -106,16 +106,16 @@
 :config
 (setq company-idle-delay 0.08)
 (setq company-minimum-prefix-length 3)
-;;;set keybindings
-(define-key company-active-map (kbd "C-n") 'company-select-next)
-(define-key company-active-map (kbd "C-p") 'company-select-previous)
 
 (setq company-backends
         '(company-capf company-files company-css
          (company-dabbrev-code company-gtags company-etags company-keywords)
          company-dabbrev))
-(global-company-mode t)
-)
+(global-company-mode t))
+
+(with-eval-after-load 'company
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
 
 #+END_SRC
 * yasnippet
@@ -300,6 +300,32 @@
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy)))
 
+#+END_SRC
+** clojure
+#+BEGIN_SRC emacs-lisp
+(use-package clj-refactor
+  :ensure t)
+(defun my-clj-refactor-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(use-package clojure-mode
+             :ensure t
+             :config
+             (add-hook 'clojure-mode-hook #'subword-mode)
+             (add-hook 'clojure-mode-hook #'my-clj-refactor-mode-hook))
+
+(use-package cider
+             :ensure t
+             :config
+             (setq nrepl-popup-stacktraces nil)
+             (add-hook 'cider-mode-hook 'eldoc-mode)
+             ;; Replace return key with newline-and-indent when in cider mode.
+             (add-hook 'cider-mode-hook '(lambda () (local-set-key (kbd "RET") 'newline-and-indent)))
+             (add-hook 'cider-mode-hook #'company-mode)
+             (add-hook 'cider-repl-mode-hook 'subword-mode)
+             (add-hook 'cider-repl-mode-hook #'company-mode))
 #+END_SRC
 * keybindings
 #+BEGIN_SRC emacs-lisp
