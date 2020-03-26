@@ -194,6 +194,19 @@
 
 #+END_SRC
 
+* lsp-mode
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-mode
+  :ensure t)
+(use-package company-lsp
+  :ensure t
+  :config
+(push 'company-lsp company-backends))
+
+(add-hook 'after-init-hook 'global-company-mode)
+(setq lsp-clients-clangd-executable "c:/Program Files/LLVM/bin/clangd.exe")
+(add-hook 'c++-mode-hook 'lsp)
+#+END_SRC
 * language
 ** c/c++
 #+BEGIN_SRC emacs-lisp
@@ -206,6 +219,7 @@
       compilation-always-kill t               ; Just kill old compile processes before starting the new one
       compilation-scroll-output 'first-error) ; Automatically scroll to first
 (global-set-key (kbd "<f4>") 'compile)
+
 
 #+END_SRC
 ** golang
@@ -289,18 +303,6 @@
   (define-key haskell-mode-map (kbd "C-c C-c") #'c-haskell-load-module)))
 
 #+END_SRC
-** common-lisp
-#+BEGIN_SRC emacs-lisp
-(use-package slime
-:ensure t
-:config
-(setq inferior-lisp-program "c:/common-lisp/sbcl.exe")
-(require 'slime)
-(slime-setup)
-(require 'slime-autoloads)
-(slime-setup '(slime-fancy)))
-
-#+END_SRC
 ** clojure
 #+BEGIN_SRC emacs-lisp
 (use-package clj-refactor
@@ -326,6 +328,17 @@
              (add-hook 'cider-mode-hook #'company-mode)
              (add-hook 'cider-repl-mode-hook 'subword-mode)
              (add-hook 'cider-repl-mode-hook #'company-mode))
+#+END_SRC
+** common lisp
+#+BEGIN_SRC emacs-lisp
+(use-package slime
+:ensure t
+:config
+(add-to-list 'load-path "c:/common-lisp/sbcl.exe")
+(setq inferior-lisp-program "sbcl")
+(require 'slime-autoloads)
+(slime-setup '(slime-fancy)))
+
 #+END_SRC
 * keybindings
 #+BEGIN_SRC emacs-lisp
