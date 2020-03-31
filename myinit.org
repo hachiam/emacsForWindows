@@ -165,6 +165,14 @@
       (require 'org-bullets)
       (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
+* flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+:ensure t
+:config
+(global-flycheck-mode t))
+
+#+END_SRC
 * evil
 #+BEGIN_SRC emacs-lisp
 (use-package evil
@@ -204,8 +212,14 @@
 (push 'company-lsp company-backends))
 
 (add-hook 'after-init-hook 'global-company-mode)
+;;; cpp
 (setq lsp-clients-clangd-executable "c:/Program Files/LLVM/bin/clangd.exe")
 (add-hook 'c++-mode-hook 'lsp)
+
+;;; golang
+(setq lsp-clients-go-command "c:/goworkspace/bin/gopls.exe")
+(add-hook 'go-mode-hook 'lsp)
+
 #+END_SRC
 * language
 ** c/c++
@@ -225,8 +239,9 @@
 ** golang
 #+BEGIN_SRC emacs-lisp
 (use-package go-mode
-  :ensure t)
-
+  :ensure t
+)
+  
 #+END_SRC
 ** javascript
 #+BEGIN_SRC emacs-lisp
@@ -244,7 +259,6 @@
 (use-package web-mode
 :ensure t
 :config
- (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
@@ -265,7 +279,6 @@
 (use-package emmet-mode
 :ensure t
 :config
- (require 'emmet-mode)
 (add-hook 'sgml-mode-hook 'emmet-mode) 
 (add-hook 'html-mode-hook 'emmet-mode)
 (add-hook 'web-mode-hook 'emmet-mode)
@@ -276,7 +289,6 @@
 (use-package racket-mode
 :ensure
 :config
-(require 'racket-mode)
 (setq racket-racket-program "racket")
 (setq racket-raco-program "raco")
 (add-hook 'racket-mode-hook
@@ -351,11 +363,11 @@
 ;;;compile for c++
 (defun your-g++-compile-and-run ()
   (interactive)
-  (compile (format "g++ -pthread %s && .\\a.exe" (buffer-file-name))))
+  (compile (format "clang++ -pthread %s && .\\a.exe" (buffer-file-name))))
 ;;;compile for c
 (defun your-gcc-compile-and-run ()
   (interactive)
-  (compile (format "gcc %s && .\\a.exe" (buffer-file-name))))
+  (compile (format "clang %s && .\\a.exe" (buffer-file-name))))
 
 ;;;binding to kbd
 (eval-after-load "cc-mode"
