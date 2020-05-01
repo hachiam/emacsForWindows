@@ -1,9 +1,9 @@
 * My emacs
 ** 配置介绍
-1. 因为是在windows上使用的缘故，没有添加一些杀手级的插件(magit,flycheck)
+1. 因为是在windows上使用的缘故，没有添加一些杀手级的插件(magit)
 2. 函数式编程为主(支持haskell/Racket/common lisp/Clojure)
-3. c++/golang少量配置。
+3. 还支持的语言有：c++, golang, python, js(web开发相关).
 4. 代码补全：lsp-mode（c++ golang） , clojure(cider), common lisp (slime)
-4. color-theme : sanityinc-tomorrow
+4. color-theme : spacemacs-light
 ** 主要配置
 使用org-mode管理配置文件，详情参照myinit.org

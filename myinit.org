@@ -39,12 +39,12 @@
 #+END_SRC
 * theme
 #+BEGIN_SRC emacs-lisp
-(use-package color-theme-sanityinc-tomorrow
-  :ensure t)
 (use-package nyan-mode
 :ensure t
 :config
 (nyan-mode 1))
+
+(load-theme 'spacemacs-light t)
 
 #+END_SRC
 * editer
@@ -58,6 +58,7 @@
 (setq frame-title-format "emacs@%b")
 (electric-pair-mode 1)
 (electric-indent-mode t)
+(global-hl-line-mode t)
 (delete-selection-mode t)
 (global-linum-mode 1)
 (show-paren-mode 1)
@@ -168,10 +169,7 @@
 * flycheck
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
-:ensure t
-:config
-(global-flycheck-mode t))
-
+:ensure t)
 #+END_SRC
 * evil
 #+BEGIN_SRC emacs-lisp
@@ -210,15 +208,15 @@
   :ensure t
   :config
 (push 'company-lsp company-backends))
-
 (add-hook 'after-init-hook 'global-company-mode)
 ;;; cpp
 (setq lsp-clients-clangd-executable "c:/Program Files/LLVM/bin/clangd.exe")
 (add-hook 'c++-mode-hook 'lsp)
-
 ;;; golang
 (setq lsp-clients-go-command "c:/goworkspace/bin/gopls.exe")
 (add-hook 'go-mode-hook 'lsp)
+;;; python
+(add-hook 'python-mode-hook 'lsp)
 
 #+END_SRC
 * language
@@ -235,6 +233,13 @@
 (global-set-key (kbd "<f4>") 'compile)
 
 
+#+END_SRC
+** python
+#+BEGIN_SRC emacs-lisp
+(add-hook 'python-mode-hook
+(function (lambda ()
+(setq indent-tabs-mode nil
+      tab-width 2))))
 #+END_SRC
 ** golang
 #+BEGIN_SRC emacs-lisp
@@ -284,36 +289,10 @@
 (add-hook 'web-mode-hook 'emmet-mode)
 (add-hook 'css-mode-hook  'emmet-mode))
 #+END_SRC
-** Racket
-#+BEGIN_SRC emacs-lisp
-(use-package racket-mode
-:ensure
-:config
-(setq racket-racket-program "racket")
-(setq racket-raco-program "raco")
-(add-hook 'racket-mode-hook
-          (lambda ()
-            (define-key racket-mode-map (kbd "C-x C-j") 'racket-run)))
-(setq tab-always-indent 'complete))
-
-#+END_SRC
 ** Haskell
 #+BEGIN_SRC emacs-lisp
 (use-package haskell-mode
-:ensure t)
-
-(defun c-haskell-load-module ()
-  (interactive)
-  (let ((module (buffer-name)))
-    (save-buffer)
-    (switch-to-haskell)
-    (insert (concat ":load " module))
-    (comint-send-input)))
-
-(eval-after-load "haskell-mode"
-  '(progn
-  (define-key haskell-mode-map (kbd "C-c C-c") #'c-haskell-load-module)))
-
+     :ensure t)
 #+END_SRC
 ** clojure
 #+BEGIN_SRC emacs-lisp
@@ -341,6 +320,29 @@
              (add-hook 'cider-repl-mode-hook 'subword-mode)
              (add-hook 'cider-repl-mode-hook #'company-mode))
 #+END_SRC
+** racket
+#+BEGIN_SRC emacs-lisp
+(use-package racket-mode
+:ensure t
+:config
+(setq racket-racket-program "racket")
+(setq racket-raco-program "raco")
+(add-hook 'racket-mode-hook
+          (lambda ()
+            (define-key racket-mode-map (kbd "C-x C-j") 'racket-run)))
+(setq tab-always-indent 'complete))
+
+#+END_SRC
+** scheme
+#+BEGIN_SRC emacs-lisp
+(use-package geiser
+:ensure t
+:config
+ (setq scheme-program-name "scheme")
+ (setq geiser-chez-binary "scheme")
+ (setq geiser-active-implementations '(chez))
+)
+#+END_SRC
 ** common lisp
 #+BEGIN_SRC emacs-lisp
 (use-package slime
@@ -350,6 +352,7 @@
 (setq inferior-lisp-program "sbcl")
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy)))
+
 
 #+END_SRC
 * keybindings
