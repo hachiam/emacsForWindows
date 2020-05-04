@@ -173,11 +173,18 @@
 #+END_SRC
 * evil
 #+BEGIN_SRC emacs-lisp
+(use-package evil-leader
+ :ensure t
+ :config
+ (global-evil-leader-mode)
+ (evil-leader/set-leader ","))
+
 (use-package evil
  :ensure t
  :config
  (evil-mode 1)
 )
+
 
 (defun xwl-jj-as-esc ()
   (interactive)
@@ -198,6 +205,7 @@
 (define-key evil-insert-state-map  "j" 'xwl-jj-as-esc)
 (define-key evil-replace-state-map "j" 'xwl-jj-as-esc)
 
+
 #+END_SRC
 
 * lsp-mode
@@ -215,8 +223,6 @@
 ;;; golang
 (setq lsp-clients-go-command "c:/goworkspace/bin/gopls.exe")
 (add-hook 'go-mode-hook 'lsp)
-;;; python
-(add-hook 'python-mode-hook 'lsp)
 
 #+END_SRC
 * language
@@ -377,5 +383,14 @@
 '(progn
 (define-key c++-mode-map (kbd "<f5>") #'your-g++-compile-and-run)
 (define-key c-mode-base-map (kbd "<f5>") #'your-gcc-compile-and-run)))
+
+;;; indent the whole buffer
+(defun format-code-in-buffer ()
+(interactive)
+(progn
+   (mark-whole-buffer)
+   (call-interactively 'indent-region)
+))
+(evil-leader/set-key "f" 'format-code-in-buffer)
 
 #+END_SRC

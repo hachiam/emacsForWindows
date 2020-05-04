@@ -25,7 +25,7 @@
  '(frame-background-mode (quote dark))
  '(package-selected-packages
    (quote
-    (geiser ewal-spacemacs-themes spacemacs-theme emacs-theme-gruvbox atom-one-dark haskell-mode slime racket-mode clj-refactor emmet-mode web-mode js2-mode go-mode company-lsp lsp-mode flycheck org-bullets hungry-delete evil-smartparens smartparens yasnippet-snippets yasnippet use-package nyan-mode counsel company cnfonts)))
+    (evil-leader geiser ewal-spacemacs-themes spacemacs-theme emacs-theme-gruvbox atom-one-dark haskell-mode slime racket-mode clj-refactor emmet-mode web-mode js2-mode go-mode company-lsp lsp-mode flycheck org-bullets hungry-delete evil-smartparens smartparens yasnippet-snippets yasnippet use-package nyan-mode counsel company cnfonts)))
  '(tetris-x-colors
    [[229 192 123]
     [97 175 239]
